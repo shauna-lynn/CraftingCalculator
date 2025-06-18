@@ -2,8 +2,6 @@
 
 This application helps manage and calculate recipes with a historical aesthetic.
 
-![Recipe Calculator Screenshot](docs/recipe-calculator_LLaqFwcpHM.png)
-
 ## Download
 
 To use Recipe Calculator:
@@ -38,6 +36,8 @@ No installation required - the application runs directly from the executable fil
 
 4. **Exporting Recipes**:
    - Use the "Export" button to save recipes as printable documents
+
+![Recipe Calculator Screenshot](docs/recipe-calculator_LLaqFwcpHM.png)
 
 ## System Requirements
 
