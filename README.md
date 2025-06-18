@@ -47,10 +47,6 @@ No installation required - the application runs directly from the executable fil
 
 If you encounter any issues or have questions, please [open an issue](https://github.com/yourusername/recipe-calculator/issues) on this repository.
 
-## License
-
-[MIT](LICENSE)
-
 ## For Developers
 
 If you're interested in working with the source code:
