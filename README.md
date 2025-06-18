@@ -35,7 +35,7 @@ No installation required - the application runs directly from the executable fil
    - The application will automatically recalculate all ingredient quantities
 
 4. **Exporting Recipes**:
-   - Use the "Export" button to save recipes as printable documents
+   - Use the "Export" button to save recipes as shareable documents
 
 ![Recipe Calculator Screenshot](docs/recipe-calculator_LLaqFwcpHM.png)
 
