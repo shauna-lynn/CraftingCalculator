@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Recipe Calculator</h1>
+        
+        <div class="calculator-section">
+            <h2>Calculate Requirements</h2>
+            <div class="form-group">
+                <select id="item-select">
+                    <option value="">Select an item</option>
+                </select>
+                <input type="number" id="quantity" placeholder="Quantity" min="1" value="1">
+                <button id="calculate">Calculate</button>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <h2>Required Materials</h2>
+            <div id="results"></div>
+        </div>
+        
+        <div class="recipe-section">
+            <h2>Add Recipe</h2>
+            <div class="form-group">
+                <input type="text" id="recipe-name" placeholder="Item name">
+                <input type="number" id="recipe-output" placeholder="Output Qty" min="1" value="1">
+            </div>
+            <div id="ingredients-container">
+                <div class="ingredient-row">
+                    <input type="text" class="ingredient-name" placeholder="Ingredient">
+                    <input type="number" class="ingredient-amount" placeholder="Amount" min="1">
+                </div>
+            </div>
+            <button id="add-ingredient">Add Ingredient</button>
+            <button id="save-recipe">Save Recipe</button>
+        </div>
+        
+        <div class="import-export-section">
+            <h2>Import/Export Recipes</h2>
+            <div class="form-group">
+                <input type="file" id="import-file" accept=".json">
+                <button id="import-recipes">Import</button>
+                <button id="export-recipes">Export</button>
+                <button id="new-recipe-book">New Recipe Book</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
