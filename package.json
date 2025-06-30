@@ -11,7 +11,7 @@
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
-    "electron": "^36.4.0",
+    "electron": "^37.1.0",
     "electron-packager": "^17.1.1"
   }
 }
