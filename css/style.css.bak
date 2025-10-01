@@ -1,0 +1,21 @@
+/* Extracted from index.html <style> */
+/* Reset and base styles */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Georgia', serif;
+  background-color: #f5f1e8;
+  background-image: url('https://www.transparenttextures.com/patterns/black-paper.png');
+  color: #3a2c1d;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container { max-width: 1400px; margin: 0 auto; position: relative; background-color: rgba(255, 252, 245, 0.95); border: 2px solid #8b6b4c; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 30px; }
+
+/* NOTE: The full CSS is very large in index.html.
+   For now, keep the full app working by leaving the original inline <style> in place.
+   Once this file is verified, we will replace the inline <style> with a <link> tag
+   and move the remainder of styles here incrementally. */
+

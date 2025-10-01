@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crafting Calculator</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body class="dark-mode">
+    <div class="container">
+
+
+
+
+        <h1>Crafting Calculator</h1>
+
+        <div class="navigation">
+            <button class="nav-btn active" onclick="showSection('calculator')">Recipes</button>
+            <button class="nav-btn" onclick="showSection('ingredients')">Ingredients</button>
+            <button class="nav-btn" onclick="showSection('import-export')">Settings</button>
+        </div>
+
+        <div id="calculator-section" class="section-content">
+
+        <!-- Startup User ID Modal (in body) -->
+        <div id="user-modal" class="modal-overlay">
+            <div class="modal">
+                <div class="title">WELCOME</div>
+                <div class="subtitle">Please select one of the following options:</div>
+                <button id="startup-create" class="cta-btn">CREATE NEW DATABASE</button>
+                <input type="text" id="startup-user-id" class="input-large" placeholder="Database ID" aria-label="Database ID" name="database-id" autocomplete="off" />
+                <button id="startup-load" class="action-btn">LOAD DATABASE ID</button>
+                <p class="note">Database ID is stored locally and auto-loads each visit.<br/>You can manage your active database in Settings.</p>
+            </div>
+        </div>
+
+
+            <div class="main-content">
+                <div class="left-panel">
+
+                    <div class="calculator-main">
+
+
+                        <div class="ingredient-list-section">
+                            <div class="ingredients-header">
+                                <h2>Recipes</h2>
+                                <div class="btn-group">
+                                </div>
+                            </div>
+                            <div class="search-box">
+                                <input type="text" id="recipe-search" placeholder="Search recipes...">
+                            </div>
+                            <div class="bulk-actions">
+                                <button id="select-all-recipes-btn" class="small-btn icon-only" title="Select All"><img src="img/selectall.png" alt="Select All" class="icon-img icon-selectall"/></button>
+                                <div class="search-actions">
+                                    <button id="toggle-recipe-form" class="small-btn icon-only"><img src="img/add.png" alt="Add" class="icon-img"/></button>
+                                </div>
+
+                                <button id="add-selected-to-queue" type="button" class="small-btn icon-only" title="Add to Queue"><img src="img/queue.png" alt="Queue" class="icon-img icon-queue"/></button>
+                                <button id="open-bulk-edit-recipes" class="small-btn icon-only" title="Edit"><img src="img/edit.png" alt="Edit" class="icon-img icon-edit"/></button>
+                                <button id="delete-selected-recipes" class="small-btn icon-only danger-btn" title="Delete"><img src="img/delete.png" alt="Delete" class="icon-img icon-delete"/></button>
+                                <button id="clear-selection-recipes" class="small-btn" title="Clear Selection">Clear</button>
+                            </div>
+                            <div class="recipe-form-container">
+
+                                <div id="recipe-form" class="ingredient-form" style="display: none;">
+                                    <h3>Add Recipe</h3>
+                                    <div class="form-row">
+                                        <div class="searchable-dropdown category-dropdown">
+                                            <input type="text" id="recipe-category" placeholder="Type to search categories or click to browse..." autocomplete="off">
+                                            <div id="category-list" class="autocomplete-list"></div>
+                                        </div>
+                                        <input type="text" id="recipe-name" placeholder="Item name">
+                                        <input type="number" id="recipe-output" placeholder="Output Qty" min="1">
+                                    </div>
+                                    <div class="form-row">
+                                        <input type="number" id="recipe-price" placeholder="Selling Price (optional)" min="0" step="0.01">
+                                        <input type="number" id="recipe-stack-size" placeholder="Stack Size (optional)" min="1" step="1">
+                                        <input type="text" id="recipe-notes" placeholder="Notes (optional)">
+                                    </div>
+                                    <div id="ingredients-container">
+                                        <div class="ingredient-row">
+                                            <div class="searchable-dropdown ingredient-dropdown">
+                                                <input type="text" class="ingredient-name" placeholder="Type to search or click to browse..." autocomplete="off">
+                                                <div class="autocomplete-list ingredient-list"></div>
+                                            </div>
+                                            <input type="number" class="ingredient-amount" placeholder="Amount" min="1">
+                                            <button class="remove-ingredient icon-btn danger-btn">✕</button>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button id="add-ingredient">Add Ingredient</button>
+                                        <button id="save-recipe" class="primary-btn">Save Recipe</button>
+                                        <button id="cancel-recipe" class="danger-btn">Cancel</button>
+                                    </div>
+                                <div id="recipe-categories-panel" class="bulk-edit-panel" style="display:none;">
+                                    <h3>Recipe Categories</h3>
+                                    <div class="form-row">
+                                        <input type="text" id="new-recipe-category-name" placeholder="New category name">
+                                        <button id="save-recipe-category" class="primary-btn">Add</button>
+                                        <button id="close-recipe-categories" class="danger-btn">Close</button>
+                                    </div>
+                                    <div id="recipe-categories-list" style="max-height:200px;overflow:auto;"></div>
+                                    <div class="ingredients-preview" id="recipe-ingredients-preview" style="font-size:12px;opacity:0.9;margin:8px 0;display:none;"></div>
+
+                                </div>
+
+                                </div>
+                            </div>
+                            <div id="bulk-edit-recipes-panel" class="bulk-edit-panel" style="display:none;">
+                                <h3>Bulk Edit Selected Recipes</h3>
+                                <div class="form-row">
+                                    <div class="searchable-dropdown category-dropdown">
+                                        <input type="text" id="bulk-recipe-category" placeholder="New category (leave blank to skip)" autocomplete="off">
+                                        <div id="bulk-recipe-category-list" class="autocomplete-list"></div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <input type="number" id="bulk-recipe-price" placeholder="Selling Price (leave blank to skip)" min="0" step="0.01">
+                                </div>
+                                <div class="form-row">
+                                    <input type="number" id="bulk-recipe-stack" placeholder="Stack Size (leave blank to skip)" min="1" step="1">
+                                </div>
+                                <div class="form-row">
+                                    <input type="text" id="bulk-recipe-notes" placeholder="Notes (leave blank to skip)">
+                                </div>
+
+                                <div class="form-row">
+                                    <button id="apply-bulk-recipes" class="primary-btn">Apply to Selected</button>
+                                    <button id="close-bulk-recipes" class="danger-btn">Close</button>
+                                </div>
+                                <div class="empty-hint">Tip: Select recipes with checkboxes. Leave fields blank to keep existing values.</div>
+                            </div>
+                            <div id="recipes-list"></div>
+                        </div>
+
+
+
+                    </div> <!-- /.calculator-main -->
+
+                </div> <!-- /.left-panel -->
+
+
+
+            </div> <!-- /.main-content -->
+
+        </div> <!-- /#calculator-section -->
+
+        <div id="ingredients-section" class="section-content" style="display: none;">
+            <div class="ingredient-section">
+                <div class="ingredient-list-section">
+
+
+                    <div class="ingredients-header">
+                        <h2>Ingredients</h2>
+                        <div class="btn-group">
+                            <button id="toggle-category-form" class="new-ingredient-btn">New Ingredient</button>
+                            <button id="collapse-all-ingredients" class="small-btn">Collapse All</button>
+                        </div>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" id="ingredient-search" placeholder="Search ingredients...">
+                    </div>
+                    <div id="category-form" class="ingredient-form" style="display: none;">
+                        <h3>Add Ingredient</h3>
+                        <div class="form-row">
+                            <div class="searchable-dropdown category-dropdown">
+                                <input type="text" id="ingredient-category" placeholder="Type to search categories or click to browse..." autocomplete="off">
+                                <div id="ingredient-category-list" class="autocomplete-list"></div>
+                            </div>
+                            <input type="text" id="ingredient-name" placeholder="Ingredient name">
+                        </div>
+                        <div class="form-row">
+                            <input type="number" id="ingredient-price" placeholder="Price per unit" min="0" step="0.01">
+                            <input type="number" id="ingredient-stack-size" placeholder="Stack Size" min="1" max="200">
+                        </div>
+                        <div class="form-row">
+                            <textarea id="ingredient-note" placeholder="Notes (optional)" rows="2"></textarea>
+                        </div>
+                        <div class="btn-group">
+                            <button id="save-ingredient" class="primary-btn">Save Ingredient</button>
+                            <button id="cancel-ingredient" class="danger-btn">Cancel</button>
+                        </div>
+                    </div>
+                    <div class="bulk-actions">
+                        <button id="select-all-ingredients-btn" class="small-btn icon-only" title="Select All"><img src="img/selectall.png" alt="Select All" class="icon-img icon-selectall"/></button>
+                        <button id="open-bulk-edit" class="small-btn icon-only" title="Edit"><img src="img/edit.png" alt="Edit" class="icon-img icon-edit"/></button>
+                        <button id="delete-selected-ingredients" class="small-btn icon-only danger-btn" title="Delete"><img src="img/delete.png" alt="Delete" class="icon-img icon-delete"/></button>
+                        <button id="clear-selection" class="small-btn" title="Clear Selection">Clear</button>
+                    </div>
+                    <div id="bulk-edit-panel" class="bulk-edit-panel">
+                        <h3>Bulk Edit Selected Ingredients</h3>
+                        <div class="form-row">
+                            <div class="searchable-dropdown category-dropdown">
+                                <input type="text" id="bulk-category" placeholder="New category (leave blank to skip)" autocomplete="off">
+                                <div id="bulk-category-list" class="autocomplete-list"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <input type="number" id="bulk-price" placeholder="Set price (leave blank to skip)" min="0" step="0.01">
+                            <input type="number" id="bulk-stack" placeholder="Set stack size (leave blank to skip)" min="1" max="200">
+                        </div>
+                        <div class="form-row">
+                            <input type="text" id="bulk-notes" placeholder="Set notes (leave blank to skip)">
+                        </div>
+                        <div class="form-row">
+                            <button id="apply-bulk" class="primary-btn">Apply to Selected</button>
+                            <button id="close-bulk" class="danger-btn">Close</button>
+                        </div>
+                        <div class="empty-hint">Tip: Select ingredients with checkboxes. Leave fields blank to keep existing values.</div>
+                    </div>
+                    <div id="ingredients-list"></div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div id="import-export-section" class="section-content" style="display: none;">
+            <div class="import-export-main">
+                <h2>Settings</h2>
+
+                <!-- Simplified Settings: Database Management + Appearance -->
+                <div class="import-export-category">
+                    <h3>Database Management</h3>
+                    <div class="import-export-section">
+                        <div class="import-export-actions" style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+                            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                                <span class="field-label" style="min-width:110px;">Database ID:</span>
+                                <span id="user-id" style="font-weight:600;"></span>
+                            </div>
+                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                <button id="reconcile-duplicates" class="small-btn">Reconcile</button>
+                                <button id="toggle-user" class="small-btn">Unload</button>
+                                <button id="clear-db" class="small-btn danger-btn">Wipe</button>
+                            </div>
+                            <ul class="import-export-description">
+                                <li><strong>Reconcile</strong> — Removes duplicate entries where an ingredient shares the same name as a recipe.</li>
+                                <li><strong>Unload</strong> — Clears your locally selected Database ID so you can load a different one.</li>
+                                <li><strong>Wipe</strong> — Permanently clears all data for the current Database ID.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="import-export-category">
+                    <h3>Appearance</h3>
+                    <div class="import-export-section">
+                        <p>Coming soon</p>
+                    </div>
+                </div>
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Floating Queue Drawer and Toggle (outside .container so it can't be clipped) -->
+    <div id="queue-fab" class="queue-fab" aria-controls="queue-drawer" aria-expanded="false" title="Open Queue">
+        <img src="img/queue.png" alt="Queue" class="icon-img icon-queue"/>
+        <span id="queue-count" class="queue-badge">0</span>
+    </div>
+    <div id="queue-drawer" class="queue-drawer" aria-hidden="true" role="dialog" aria-labelledby="queue-drawer-title" style="display:none;">
+        <div class="queue-drawer-header">
+            <h3 id="queue-drawer-title">Crafting Queue</h3>
+            <button id="queue-drawer-close" class="icon-btn danger-btn" title="Close">✕</button>
+        </div>
+        <div class="queue-drawer-content">
+            <div id="queue-items"></div>
+            <div id="queue-results"></div>
+        </div>
+    </div>
+
+    <script src="js/sync.js"></script>
+    <script src="js/app.js"></script>
+
+
+
+</body>
+</html>

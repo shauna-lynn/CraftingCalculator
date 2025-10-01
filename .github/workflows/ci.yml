@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install server dependencies
+        run: npm --prefix server ci
+      - name: Verify server entry exists and parses
+        run: |
+          if (!(Test-Path server/index.js)) { throw 'server/index.js missing' }
+          node -e "require('fs').readFileSync('server/index.js','utf8') && console.log('OK')"
+
